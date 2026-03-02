@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  {% if page.permalink %}
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.permalink }}">
+  {% endif %}
+  <style>
+    /* ========================================================
+       Design System — Ratgeber Sites
+       Mobile-First, Conversion-Optimiert, Semantic HTML
+    ======================================================== */
+
+    :root {
+      --navy:         #0f2942;
+      --navy-light:   #1a4a7a;
+      --blue:         #1d6fa4;
+      --blue-light:   #dbeafe;
+      --accent:       #16a34a;
+      --accent-hover: #15803d;
+      --accent-light: #f0fdf4;
+      --warn:         #ea580c;
+      --bg:           #f8fafc;
+      --surface:      #ffffff;
+      --border:       #e2e8f0;
+      --border-dark:  #cbd5e1;
+      --text:         #1e293b;
+      --text-soft:    #334155;
+      --muted:        #64748b;
+      --max-read:     780px;
+      --max-wide:     1100px;
+      --radius:       10px;
+      --shadow-sm:    0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md:    0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+      --shadow-lg:    0 10px 30px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    /* --- Reset ------------------------------------------- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                   'Helvetica Neue', Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* --- Header ------------------------------------------ */
+    .site-header {
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .site-header__inner {
+      max-width: var(--max-wide);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-logo {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .site-logo:hover { color: #93c5fd; text-decoration: none; }
+    .site-logo__accent { color: #60a5fa; }
+    .site-nav { display: flex; align-items: center; gap: 0.25rem; }
+    .site-nav a {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .site-nav a:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* --- Main -------------------------------------------- */
+    main { flex: 1; }
+
+    /* --- Footer ------------------------------------------ */
+    .site-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.8rem;
+      margin-top: 4rem;
+      line-height: 1.8;
+    }
+    .site-footer a { color: rgba(255,255,255,0.65); text-decoration: none; }
+    .site-footer a:hover { color: #fff; text-decoration: underline; }
+
+    /* --- Hero -------------------------------------------- */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: #fff;
+      padding: 4.5rem 1.5rem 3.5rem;
+      text-align: center;
+    }
+    .hero__inner { max-width: 680px; margin: 0 auto; }
+    .hero__eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #93c5fd;
+      background: rgba(255,255,255,0.08);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 1.25rem;
+    }
+    .hero__title {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .hero__desc {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.65;
+    }
+
+    /* --- Card Grid --------------------------------------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      border-color: var(--blue);
+      text-decoration: none;
+    }
+    .card__date {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+    .card__title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+    .card:hover .card__title { color: var(--blue); }
+    .card__excerpt {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* --- Section wrapper ---------------------------------- */
+    .section {
+      max-width: var(--max-wide);
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+    .section__title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .section__sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+      margin-top: 2rem;
+    }
+
+    /* --- Responsive -------------------------------------- */
+    @media (max-width: 640px) {
+      .site-nav { display: none; }
+      .hero { padding: 3rem 1rem 2.5rem; }
+      .section { padding: 2rem 1rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="{{ site.baseurl }}/" class="site-logo">
+        {{ site.title }}
+      </a>
+      <nav class="site-nav">
+        <a href="{{ site.baseurl }}/">Startseite</a>
+        <a href="https://deraneckaerial.github.io/">Alle Ratgeber</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      © {{ 'now' | date: "%Y" }} {{ site.title }}
+      &nbsp;·&nbsp;
+      <a href="https://deraneckaerial.github.io/">Alle Ratgeber</a>
+      &nbsp;·&nbsp;
+      Artikel können Affiliate-Links enthalten. Bei Kauf erhalten wir eine Provision – für dich kostenlos.
+    </p>
+  </footer>
+</body>
+</html>
