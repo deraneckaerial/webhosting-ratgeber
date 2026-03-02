@@ -199,6 +199,23 @@ layout: default
     color: #be123c;
   }
 
+  /* Hero Image */
+  .post-hero-image {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+  }
+  .post-hero-image-credit {
+    background: rgba(0,0,0,0.45);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    text-align: right;
+  }
+  .post-hero-image-credit a { color: rgba(255,255,255,0.8); text-decoration: none; }
+  .post-hero-image-credit a:hover { color: #fff; }
+
   /* Responsive */
   @media (max-width: 640px) {
     .post-hero { padding: 2rem 1rem 1.75rem; }
@@ -207,8 +224,21 @@ layout: default
     .post-content table { font-size: 0.8rem; }
     .post-content th, .post-content td { padding: 0.6rem 0.75rem; }
     .affiliate-notice { font-size: 0.825rem; }
+    .post-hero-image { max-height: 240px; }
   }
 </style>
+
+{% if page.image %}
+<img class="post-hero-image"
+     src="{{ page.image }}"
+     alt="{{ page.image_alt | default: page.title }}"
+     loading="lazy">
+{% if page.image_credit %}
+<div class="post-hero-image-credit">
+  Foto: {{ page.image_credit }}
+</div>
+{% endif %}
+{% endif %}
 
 <div class="post-hero">
   <div class="post-hero__inner">
