@@ -1,0 +1,9 @@
+title: "Webhosting Ratgeber"
+description: "Webhosting & WordPress Hosting im Vergleich"
+url: "https://deraneckaerial.github.io"
+baseurl: "/webhosting-ratgeber"
+lang: de
+permalink: /:title/
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
