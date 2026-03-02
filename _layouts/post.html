@@ -132,7 +132,7 @@ layout: default
   }
   .post-content a:hover { color: #0f2942; }
 
-  /* Tables */
+  /* Tables — responsive wrapper */
   .post-content table {
     width: 100%;
     border-collapse: collapse;
@@ -140,7 +140,22 @@ layout: default
     font-size: 0.9rem;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    display: table;
+  }
+  /* Scrollbar on small screens */
+  .post-content .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 2rem 0;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  }
+  .post-content .table-wrap table {
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    min-width: 480px;
   }
   .post-content thead {
     background: #0f2942;
@@ -158,11 +173,37 @@ layout: default
   .post-content td {
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #e2e8f0;
-    vertical-align: top;
+    vertical-align: middle;
+    line-height: 1.5;
   }
   .post-content tbody tr:last-child td { border-bottom: none; }
   .post-content tbody tr:nth-child(even) { background: #f8fafc; }
   .post-content tbody tr:hover { background: #eff6ff; }
+
+  /* Erste Spalte = Label → leicht hervorgehoben */
+  .post-content td:first-child {
+    font-weight: 600;
+    color: #0f2942;
+    white-space: nowrap;
+  }
+
+  /* Emojis in Tabellen: einheitliche Größe, kein Zeilenumbruch */
+  .post-content td, .post-content th {
+    font-variant-emoji: text;
+  }
+  /* ✅ ❌ grüner/roter Hintergrund-Hint */
+  .post-content td:has(> *:only-child):not(:has(a)) {
+    text-align: center;
+  }
+
+  /* Sterne-Bewertung: goldene Farbe */
+  .post-content td:is([data-stars], *) {
+    color: inherit;
+  }
+  /* ⭐ Sternzeichen goldig einfärben */
+  .post-content td {
+    --star-color: #f59e0b;
+  }
 
   /* Blockquote */
   .post-content blockquote {
@@ -266,9 +307,33 @@ layout: default
 </div>
 
 <div class="post-body">
-  <div class="post-content">
+  <div class="post-content" id="post-content">
     {{ content }}
   </div>
+
+  <script>
+    // Tabellen in Scroll-Wrapper für Mobile packen
+    document.querySelectorAll('#post-content table').forEach(function(t) {
+      var wrap = document.createElement('div');
+      wrap.className = 'table-wrap';
+      t.parentNode.insertBefore(wrap, t);
+      wrap.appendChild(t);
+    });
+
+    // Sterne gold einfärben
+    document.querySelectorAll('#post-content td, #post-content th').forEach(function(el) {
+      el.innerHTML = el.innerHTML.replace(/⭐/g,
+        '<span style="color:#f59e0b;font-style:normal;">⭐</span>'
+      );
+      // ✅ grün, ❌ rot
+      el.innerHTML = el.innerHTML
+        .replace(/✅/g, '<span style="color:#16a34a;">✅</span>')
+        .replace(/❌/g, '<span style="color:#dc2626;">❌</span>')
+        .replace(/🔴/g, '<span style="color:#dc2626;">🔴</span>')
+        .replace(/🟡/g, '<span style="color:#d97706;">🟡</span>')
+        .replace(/🟢/g, '<span style="color:#16a34a;">🟢</span>');
+    });
+  </script>
 
   <div class="affiliate-notice" role="note">
     <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
